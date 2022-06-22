@@ -1,0 +1,113 @@
+{% extends 'my_library.html' %}
+
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block head %}
+    {{ super() }}
+{% endblock head %}
+
+
+{% block content %}
+    <h8 class="text-muted">профіль користувача</h8>
+    <h1 class="text-secondary titles">{{ user.name }}</h1>
+    <h8 class="text-muted titles">{{ count }} Книжок</h8>
+
+    <h3 class="titles" style="margin-top: 70px">
+        Топ книжок
+    </h3>
+    <a class="text-muted titles" href="{{ url_for('author') }}">відкрити усіх</a>
+
+        {% if func(flag) == [] %}
+            <p class="text-danger">Упс.. поки нічого немає</p>
+        {% else %}
+            <ol class="titles">
+            {% for artist in func(flag) %}
+            <p>
+            <li>
+                <a href="{{ url_for('authors', author_id=author.id) }}" class="text">
+                    {{ artist }}
+                </a>
+            </li>
+            </p>
+            {% endfor %}
+              </ol>
+        {% endif %}
+
+
+    <h3 class="titles" style="margin-top: 70px">
+        Топ книжок
+    </h3>
+        <a class="text-muted titles" href="{{ url_for('library') }}">відкрити усі</a>
+
+
+        {% if count == 0 %}
+            <p class="text-danger">Упс.. поки нічого не додано</p>
+
+        {% elif count < 4 %}
+            <table class="table table-hover">
+                <tr class="table-dark">
+                    <td>#</td>
+                    <td>Назва</td>
+                    <td>Жанр</td>
+                    <td>Автор</td>
+                    <td> </td>
+                    <td>🕓</td>
+                </tr>
+            {% for i in range(count) %}
+                <tr class="table-dark">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ book[i].name }}</td>
+                    <td>
+                        <a href="{{ url_for('author', author_id=book.query.get(books[i].author_id)) }}" class="text">
+                            {{ author.query.filter(author.id == author.query.get(books[i].author_id)).first() }}
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{ url_for('book_delete', book_id=books[i].id, prev='profile') }}" class="btn btn-danger btn_del">
+                            Видалити
+                        </a>
+                    </td>
+                    <td>{{ books[i].duration }}</td>
+                </tr>
+            {% endfor %}
+            </table>
+
+
+        {% else %}
+            <table class="table table-hover">
+
+                <tr class="table-dark">
+                    <td>#</td>
+                    <td>Назва</td>
+                    <td>Автор</td>
+                    <td></td>
+                    <td>🕓</td>
+                </tr>
+                {% for i in range(4) %}
+                <tr class="table-dark">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ songs[i].name }}</td>
+                    <td>
+                        <a href="{{ url_for('author', author_id=books[i].author_id) }}" class="text">
+                            {{ author.query.get(books[i].author_id).name }}
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{ url_for('author', author_id=author.query.get(books[i].author_id)) }}" class="text">
+                            {{ author.query.filter(author.id == author.query.get(books[i].author_id)).first() }}
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{ url_for('book_delete', book_id=books[i].id, prev='profile') }}" class="btn btn-danger btn_del">
+                            Видалити
+                        </a>
+                    </td>
+                    <td>{{ books[i].duration }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+
+{% block head %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand">Книжна бібліотека</a>
+            <div class="collapse navbar-collapse" id="navbarColor01">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('my_library') }}">Домашня сторінка</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('search') }}">Шукати</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('library') }}">Моя бібліотека</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('profile') }}">Профіль</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('logout') }}">Вийти</a>
+                    </li>
+                    <li class="nav-item">
+                        {% if current_user.has_role('admin') %}
+                            <a class="nav-link" href="/admin">Admin</a>
+                        {% endif %}
+                </ul>
+            </div>
+    </div>
+    </nav>
+{% endblock head %}
+
+{% endblock %}

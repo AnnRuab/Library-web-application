@@ -1,0 +1,59 @@
+
+{% extends 'homepage.html' %}
+
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+    <p>
+
+    <h3 class="titles"><b>Додані книги</b>️</h3>
+    </p>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <table class="table table-hover">
+    <tr class="table-dark">
+      <th scope="row">#</th>
+        <td>Назва</td>
+        <td>Альбом</td>
+        <td>Автор</td>
+        <td></td>
+        <td>🕓</td>
+    </tr>
+    {% for song in songs %}
+        <tr class="table-dark">
+        <th>{{ loop.index }}</th>
+        <td>{{ song.name }} </td>
+        <td>
+        <a href="{{ url_for('author', author_id=book.author_id) }}" class="text">
+            {{ author.query.get(book.author_id).name }}
+        </a>
+        </td>
+        <td>
+            <a href="{{ url_for('author', author_id=author.query.get(book.author_id).author_id) }}" class="text">
+                {{ author.query.filter(author.id == author.query.get(book.author_id).author_id ).first() }}
+                Вподобати
+            </a>
+        </td>
+        <td>
+            <a href="{{ url_for('book delete', book_id=book.id, prev='library') }}" class="btn btn-danger">
+                Видалити
+            </a>
+        <td>
+            {{ book.duration }}
+        </td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}

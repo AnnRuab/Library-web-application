@@ -1,0 +1,91 @@
+{% extends 'my_library.html' %}
+
+{% block menu %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+    {% if books != [] %}
+        <h3 class="titles" style="margin-top: 70px">Книги</h3>
+        <table class="table table-hover">
+        <tr class="table-dark titles">
+            <td>#</td>
+            <td>Назва</td>
+            <td>Автор</td>
+            <td></td>
+            <td></td>
+            <td>🕒</td>
+        </tr>
+        {% for book in books %}
+            <tr class="table-dark titles">
+            <td>{{ loop.index }}</td>
+            <td>{{ song.name }}</td>
+            <td>
+                <a href="{{ url_for('author', author_id=author.query.get(book.author_id)) }}" class="text">
+                    {{ author.query.filter(author.id == author.query.get(book.author_id)).first() }}
+                </a>
+            </td>
+                <td>
+                    <a href="{{ url_for('book_add', book_id=book.id, prev='search_res') }}" class="btn btn-secondary">
+                        Обрати
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ url_for('song_delete', song_id=song.id, prev='search_res') }}" class="btn btn-danger">
+                        Обрати
+                    </a>
+                </td>
+            <td>{{ book.price }}</td>
+            </tr>
+        {% endfor %}
+        </table>
+    {% endif %}
+
+    {% if authors != [] %}
+        <h3 class="titles" style="margin-top: 70px">Автори</h3>
+        <table class="table table-hover">
+        <tr class="table-dark titles t">
+           <td class="t">#</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+       {% for author in authors %}
+           <tr class="table-dark titles">
+               <td class="t">{{ loop.index }}</td>
+           <td>
+            {% if author.surname != None %}
+                <a href="{{ url_for('author', author_id=author.id) }}" class="text" >{{ author.firstname }} {{ author.surname }}</a>
+            {% else %}
+                <a href="{{ url_for('author', author_id=author.id) }}" class="text">{{ author.firstname }}</a>
+            {% endif %}
+           </td>
+           <td></td>
+           <td></td>
+           </tr>
+        {% endfor %}
+        </table>
+    {% endif %}
+
+
+    {% if albums != [] %}
+        <h3 class="titles" style="margin-top: 70px">Жанри</h3>
+        <table class="table table-hover">
+        <tr class="table-dark titles">
+            <td class="t">#</td>
+            <td></td>
+        </tr>
+        {% for genre in genres %}
+            <tr class="table-dark titles">
+            <td class="t">{{ loop.index }}</td>
+            <td>
+                <a href="{{ url_for('genre', genre_id=genre.id) }}" class="text">
+                    {{ genre.name }}
+                </a>
+            </td>
+            </tr>
+        {% endfor %}
+        </table>
+    {% endif %}
+
+{% endblock %}

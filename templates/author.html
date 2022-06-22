@@ -1,0 +1,23 @@
+{% extends 'my_library.html' %}
+
+{% block title %}{{ artist }}{% endblock %}
+
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+
+{% block content %}
+    <h3 class="titles" style="margin-top: 70px">{{ author }}</h3>
+    {% if albums != [] %}
+        {% for album in albums %}
+            <p><a href="{{ url_for('author', author_id=author.id) }}" class="text titles">
+                {{ author.name }}
+            </a>
+            </p>
+        {% endfor %}
+    {% else %}
+        <p class="text-danger">Книг цього автора ще нема :(</p>
+    {% endif %}
+
+{% endblock %}

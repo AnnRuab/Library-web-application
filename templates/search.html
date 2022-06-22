@@ -1,0 +1,18 @@
+{% extends 'my_library.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+
+    <form method="GET" class="d-flex">
+        <input type="text" name="q" value="{{ request.args.get('q', '') }}" placeholder="книга, автор, жанр"
+        class="form-control me-sm-2 search">
+        <button class="btn btn-secondary search_btn my-2 " type="submit">🔍</button>
+    </form>
+
+{% endblock %}
